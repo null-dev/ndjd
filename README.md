@@ -1,3 +1,3 @@
-<h1>ndjd: <u>n</u>ull<u>d</u>ev's <u>J</u>unk <u>D</u>rawer</h1>
+# ndjd: <ins>n</ins>ull<ins>d</ins>ev's <ins>J</ins>unk <ins>D</ins>rawer
 
 Various utils for my Rust programs.
