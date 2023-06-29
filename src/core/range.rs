@@ -3,8 +3,8 @@ use std::ops::Range;
 /// Returns a range containing the minimum and maximum values in the iterator
 fn iter_range<T: Ord + Clone>(mut iter: impl Iterator<Item = T>) -> Option<Range<T>> {
     let Some(mut range) = iter.next().map(|e| Range {
-        start: e,
-        end: e.clone()
+        start: e.clone(),
+        end: e
     }) else {
         return None;
     };
