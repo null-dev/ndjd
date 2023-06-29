@@ -1,7 +1,7 @@
 use std::ops::Range;
 
 /// Returns a range containing the minimum and maximum values in the iterator
-fn iter_range<T: Ord + Clone>(mut iter: impl Iterator<Item = T>) -> Option<Range<T>> {
+pub fn iter_range<T: Ord + Clone>(mut iter: impl Iterator<Item = T>) -> Option<Range<T>> {
     let Some(mut range) = iter.next().map(|e| Range {
         start: e.clone(),
         end: e
@@ -19,7 +19,7 @@ fn iter_range<T: Ord + Clone>(mut iter: impl Iterator<Item = T>) -> Option<Range
 }
 
 /// Returns the minimum range required to contain all the input ranges
-fn iter_combine_ranges<T: Ord>(mut iter: impl Iterator<Item = Range<T>>) -> Option<Range<T>> {
+pub fn iter_combine_ranges<T: Ord>(mut iter: impl Iterator<Item = Range<T>>) -> Option<Range<T>> {
     let Some(mut merged_range) = iter.next() else {
         return None;
     };
