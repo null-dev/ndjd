@@ -62,6 +62,7 @@ pub mod float_ord {
     pub(super) use float_ord::FloatOrd;
     use std::ops::Range;
     use super::FloatRangeExt;
+    use std::borrow::Borrow;
 
     pub trait RangeFloatOrdExt<T: Copy> {
         fn float_range(self) -> Range<T>;
@@ -86,8 +87,8 @@ pub mod float_ord {
 
             /// See: [super::iter_combine_ranges]
             /// Uses [FloatOrd] to compare floats
-            pub fn $iter_combine_ranges_name(iter: impl IntoIterator<Item = Range<$typ>>) -> Option<Range<$typ>> {
-                super::iter_combine_ranges(iter.into_iter().map(|f| f.float_ord()))
+            pub fn $iter_combine_ranges_name<T : Borrow<Range<$typ>>>(iter: impl IntoIterator<Item = T>) -> Option<Range<$typ>> {
+                super::iter_combine_ranges(iter.into_iter().map(|f| f.borrow().float_ord()))
                     .map(RangeFloatOrdExt::float_range)
             }
         }
@@ -98,7 +99,7 @@ pub mod float_ord {
 
     #[cfg(test)]
     mod tests {
-        use crate::core::range::float_ord::iter_range_float_ord_f32;
+        use crate::core::range::float_ord::{iter_combine_ranges_float_ord_f32, iter_range_float_ord_f32};
 
         #[test]
         fn test_iter_range_float_ord_f32() {
@@ -113,6 +114,11 @@ pub mod float_ord {
                 2.3
             ]), Some(-5.4..2.3));
             assert_eq!(iter_range_float_ord_f32(vec![1.0]), Some(1.0..1.0));
+            assert_eq!(iter_combine_ranges_float_ord_f32(vec![
+                -5.2..3.0,
+                1.1..1.1,
+                1.5..4.4
+            ]), Some(-5.2..4.4));
         }
     }
 }
