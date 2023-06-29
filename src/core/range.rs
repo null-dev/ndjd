@@ -78,12 +78,14 @@ pub mod float_ord {
     macro_rules! impl_iter_range_float_ord {
         ($iter_range_name:ident, $iter_combine_ranges_name:ident, $typ:ty) => {
             /// See: [super::iter_range]
+            /// Uses [FloatOrd] to compare floats
             pub fn $iter_range_name<T: Into<$typ>>(iter: impl IntoIterator<Item = T>) -> Option<Range<$typ>> {
                 super::iter_range(iter.into_iter().map(|f| f.into()).map(FloatOrd))
                     .map(RangeFloatOrdExt::float_range)
             }
 
             /// See: [super::iter_combine_ranges]
+            /// Uses [FloatOrd] to compare floats
             pub fn $iter_combine_ranges_name(iter: impl IntoIterator<Item = Range<$typ>>) -> Option<Range<$typ>> {
                 super::iter_combine_ranges(iter.into_iter().map(|f| f.float_ord()))
                     .map(RangeFloatOrdExt::float_range)
